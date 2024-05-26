@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,26 +10,35 @@
     <!-- Custom CSS for Dark Mode -->
     <style>
         body {
-            background-color: #121212;
+            background-color: #0f0f0f;
             color: #ffffff;
         }
-        .form-control, .btn, .list-group-item {
-            background-color: #1e1e1e;
+        .list-group {
+            margin-bottom: 6rem;
+        }
+        .form-control,
+        .btn,
+        .list-group-item {
+            background-color: #1a1a1a;
             color: #ffffff;
             border: none;
         }
+
         .form-control::placeholder {
             color: #bbbbbb;
         }
-        .list-group-item {
-            border-bottom: 1px solid #444444;
+
+        .list-group-item:nth-child(even) {
+            background-color: #2b2b2b;
         }
+
         .no-songs-found {
             text-align: center;
             padding: 20px;
             font-size: 1.2em;
             color: #bbbbbb;
         }
+
         .play-btn {
             width: 4rem;
             height: 4rem;
@@ -40,20 +50,40 @@
         }
     </style>
 </head>
+
 <body>
+    <h1 class="text-center pt-5">The John Zone</h1>
     <div class="container mt-5">
         <input id="searchInput" type="text" class="form-control mb-3" placeholder="Search for songs...">
-        <div id="songList" class="list-group">
+        <div id="songList" class="list-group pb-5">
             <!-- Song list will be populated here -->
         </div>
     </div>
 
+
+    <footer class="bg-dark text-white py-4 fixed-bottom">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-md-left text-center mb-md-0 mb-3">
+                    <p class="mb-0">
+                        <strong>Disclaimer:</strong> This website is not affiliated with Spotify. It is intended solely for displaying a playlist and requires Spotify for playback.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-right text-center">
+                    <a href="https://github.com/yourusername/yourrepository" target="_blank" class="text-white d-inline-block align-middle">
+                        <i class="fab fa-github fa-2x"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Bootstrap JS and jQuery -->
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
     <!-- Custom JavaScript -->
     <script>
         // Function to load JSON file
@@ -74,7 +104,7 @@
             const songList = document.getElementById('songList');
             songList.innerHTML = '';
 
-            const filteredSongs = songs.filter(song => 
+            const filteredSongs = songs.filter(song =>
                 song.track_name.toLowerCase().includes(query.toLowerCase()) ||
                 song.artists.join(", ").toLowerCase().includes(query.toLowerCase())
             );
@@ -123,4 +153,5 @@
         window.onload = initialize;
     </script>
 </body>
+
 </html>
