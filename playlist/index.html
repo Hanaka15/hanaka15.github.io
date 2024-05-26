@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Search</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS for Dark Mode -->
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .form-control, .btn, .list-group-item {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: none;
+        }
+        .form-control::placeholder {
+            color: #bbbbbb;
+        }
+        .list-group-item {
+            border-bottom: 1px solid #444444;
+        }
+        .no-songs-found {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #bbbbbb;
+        }
+        .play-btn {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            background-color: #444444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <input id="searchInput" type="text" class="form-control mb-3" placeholder="Search for songs...">
+        <div id="songList" class="list-group">
+            <!-- Song list will be populated here -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <!-- Custom JavaScript -->
+    <script>
+        // Function to load JSON file
+        function loadJSON(callback) {
+            var xobj = new XMLHttpRequest();
+            xobj.overrideMimeType("application/json");
+            xobj.open('GET', './data.json', true);
+            xobj.onreadystatechange = function () {
+                if (xobj.readyState === 4 && xobj.status === 200) {
+                    callback(JSON.parse(xobj.responseText));
+                }
+            };
+            xobj.send(null);
+        }
+
+        // Function to render songs based on search query
+        function renderSongs(query, songs) {
+            const songList = document.getElementById('songList');
+            songList.innerHTML = '';
+
+            const filteredSongs = songs.filter(song => 
+                song.track_name.toLowerCase().includes(query.toLowerCase()) ||
+                song.artists.join(", ").toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (filteredSongs.length === 0) {
+                songList.innerHTML = '<div class="no-songs-found">No songs found</div>';
+                return;
+            }
+
+            filteredSongs.slice(0, 20).forEach(song => {
+                const artistNames = song.artists.join(", ");
+                const listItem = document.createElement('div');
+                listItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+                listItem.innerHTML = `
+                    <div class="d-flex align-items-center">
+                        <img src="${song.album_image_url}" alt="${song.track_name}" style="max-width: 100px;">
+                        <div class="ml-3">
+                            <h5 class="mb-0">${song.track_name}</h5>
+                            <small>${artistNames}</small>
+                        </div>
+                    </div>
+                    <a href="${song.track_uri}" class="play-btn" style="text-decoration:none"><i class="fa-solid fa-fw fa-play fa-xl" style="color: #FFD43B;"></i></a>
+                `;
+                songList.appendChild(listItem);
+            });
+        }
+
+        // Initial function to load data and render songs
+        function initialize() {
+            loadJSON(function (response) {
+                const songs = response;
+                renderSongs('', songs);
+
+                let typingTimer;
+                const doneTypingInterval = 150;
+
+                document.getElementById('searchInput').addEventListener('input', function () {
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(() => {
+                        renderSongs(this.value.trim(), songs);
+                    }, doneTypingInterval);
+                });
+            });
+        }
+
+        window.onload = initialize;
+    </script>
+</body>
+</html>
