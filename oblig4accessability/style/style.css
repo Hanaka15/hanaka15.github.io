@@ -86,6 +86,21 @@ img {
     margin: 0;
 }
 
+.error {
+    display: none;
+    color: #ae3030;
+}
+
+input:invalid + .error,
+textarea:invalid + .error {
+    display: block;
+}
+
+input:invalid,
+textarea:invalid {
+    border: 2px solid #ae3030;
+}
+
 @media screen and (max-width: 768px) {
 
     nav ul {
