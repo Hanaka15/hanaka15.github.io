@@ -11,7 +11,11 @@ body {
 
 .skip-link {
     margin: 1rem 0;
-    display: block;
+    opacity: 0;
+}
+
+.skip-link:focus {
+    opacity: 1;
 }
 
 header {
