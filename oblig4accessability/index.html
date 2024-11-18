@@ -10,50 +10,47 @@
 </head>
 <body>
 
-    <!-- Skip to Content Link -->
     <a href="#main" class="skip-link">Skip to Main Content</a>
 
-    <!-- Header Section -->
-    <header>
+    <header role="banner">
         <div class="banner">
             <h1>My Virtual Home</h1>
         </div>
         <nav aria-label="Main Navigation">
             <ul class="nav-list">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" aria-current="page">Home</a></li>
                 <li><a href="about.html">About Me</a></li>
-                <li><a href="">Gallery</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">FAQ</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">FAQ</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main tabindex="0" id="main">
+    <main id="main" tabindex="-1" role="main">
         <img src="images/cover_2.webp" alt="A purple-themed collage featuring a neon-lit alleyway, illuminated windows of a building, a person looking at framed art on a wall, a close-up of a typewriter keyboard, a modern dual-monitor computer setup, a prescription bottle labeled 'LOVE,' and text reading 'No one saves you,' evoking a melancholic and tech-inspired atmosphere">
+        
         <div class="grid">
-            <section>
+            <section aria-labelledby="rock-vibes" tabindex="0">
                 <img src="images/image_1.webp" alt="A purple-themed collage showcasing a drum set on stage, a 'Power of Rock n' Roll' sign, a Better Call Saul reference, and 'Green Day' text, celebrating music culture with a punk rock vibe.">
-                <h2>Rock Vibes</h2>
+                <h2 id="rock-vibes">Rock Vibes</h2>
                 <p>This section captures the essence of live music with a punk rock influence. The imagery reflects energy, rebellion, and the power of rock, amplified by the vivid purple tones.</p>
             </section>
-            <section>
+            <section aria-labelledby="dreamscapes" tabindex="0">
                 <img src="images/image_2.webp" alt="A snowy landscape under a purple-hued sky, accompanied by neon-lit text like 'Sweet dreams are made of this' and 'Broken Dreams Club,' creating a serene yet introspective mood with elements of nostalgia and dreamlike scenery.">
-                <h2>Dreamscapes</h2>
+                <h2 id="dreamscapes">Dreamscapes</h2>
                 <p>This scene portrays a calm winter night, blending surreal elements and nostalgic references. The purple tones evoke a sense of calmness and introspection, highlighting the beauty of the serene night sky.</p>
             </section>
-            <section>
+            <section aria-labelledby="cosmic-journey" tabindex="0">
                 <img src="images/image_3.webp" alt="A cosmic-themed collage with an astronaut floating among stars, neon signs like 'Broken Dreams Club,' alien symbols, and a 'Better Call Saul' sign, mixing space exploration and pop culture references in a dreamy purple palette.">
-                <h2>Cosmic Journey</h2>
+                <h2 id="cosmic-journey">Cosmic Journey</h2>
                 <p>This section dives into a cosmic theme, blending space imagery with pop culture. The purple hues give the scene a mystical quality, reflecting exploration, curiosity, and the unknown.</p>
             </section>
         </div>
     </main>
 
-    <!-- Footer Section -->
-    <footer>
+    <footer role="contentinfo">
         <p>&copy; 2024 My Virtual Home. All rights reserved.</p>
     </footer>
 

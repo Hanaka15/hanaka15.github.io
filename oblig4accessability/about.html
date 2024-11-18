@@ -16,41 +16,38 @@
     <a href="#main" class="skip-link">Skip to Main Content</a>
 
     <!-- Header Section -->
-    <header>
+    <header role="banner">
         <div class="banner">
             <h1>My Virtual Home</h1>
         </div>
         <nav aria-label="Main Navigation">
             <ul class="nav-list">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" aria-current="page">Home</a></li>
                 <li><a href="about.html">About Me</a></li>
-                <li><a href="">Gallery</a></li>
-                <li><a href="">Contact</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">FAQ</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">FAQ</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content -->
-    <main tabindex="0" id="main">
-        <section>
-            <h2>My Story</h2>
-            <p>Hi, I’m the creator of this website. I built this virtual space to share my ideas and
-                connect with others
-                in an accessible way.</p>
+    <main id="main" tabindex="-1" role="main">
+        <section aria-labelledby="my-story">
+            <h2 id="my-story">My Story</h2>
+            <p>Hi, I’m the creator of this website. I built this virtual space to share my ideas and connect with others in an accessible way.</p>
         </section>
 
-        <!-- Accessible Table -->
-        <section>
-            <h2>My Projects</h2>
-            <table aria-label="List of projects">
+        <section aria-labelledby="my-projects">
+            <h2 id="my-projects">My Projects</h2>
+            <table aria-describedby="projects-desc" role="table">
+                <caption id="projects-desc">This table lists some of the projects I have worked on, including the year and their current status.</caption>
                 <thead>
                     <tr>
-                        <th>Project Name</th>
-                        <th>Description</th>
-                        <th >Year</th>
-                        <th >Status</th>
+                        <th scope="col">Project Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,39 +73,39 @@
             </table>
         </section>
 
-        <section>
-            <h2>The Website</h2>
-            <p>I love this dark aesthetic and I hope you do too! This website is built with accessibility
-                in mind.</p>
+        <section aria-labelledby="website-description">
+            <h2 id="website-description">The Website</h2>
+            <p>I love this dark aesthetic and I hope you do too! This website is built with accessibility in mind.</p>
         </section>
 
-        <!-- Contact Form -->
-        <section>
-            <h2>Get in Touch</h2>
-            <form aria-label="Contact Form">
-                <!-- Name Field -->
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <p class="error">Name is required.</p>
+        <section aria-labelledby="contact-form">
+            <h2 id="contact-form">Get in Touch</h2>
+            <form aria-labelledby="contact-form" role="form">
 
-                <!-- Email Field -->
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <p class="error">Please enter a valid email address.</p>
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                    <p class="error" id="name-error" role="alert">Name is required.</p>
+                </div>
 
-                <!-- Message Field -->
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <p class="error">Message is required.</p>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                    <p class="error" id="email-error" role="alert">Please enter a valid email address.</p>
+                </div>
 
-                <!-- Submit Button -->
+                <div>
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" required aria-required="true"></textarea>
+                    <p class="error" id="message-error" role="alert">Message is required.</p>
+                </div>
+
                 <button type="submit">Submit</button>
             </form>
         </section>
     </main>
 
-    <!-- Footer Section -->
-    <footer>
+    <footer role="contentinfo">
         <p>&copy; 2024 My Virtual Home. All rights reserved.</p>
     </footer>
 
