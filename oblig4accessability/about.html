@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn more about me on this accessible sub-page.">
+    <title>About Me - My Virtual Home</title>
+    <link rel="stylesheet" href="style/water.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+
+<body>
+
+    <!-- Skip to Content Link -->
+    <a tabindex="1" href="#main" class="skip-link">Skip to Main Content</a>
+
+    <!-- Header Section -->
+    <header>
+        <div class="banner">
+            <h1 tabindex="2">My Virtual Home</h1>
+        </div>
+        <nav aria-label="Main Navigation">
+            <ul class="nav-list">
+                <li><a tabindex="3" href="index.html">Home</a></li>
+                <li><a tabindex="4" href="about.html">About Me</a></li>
+                <li><a tabindex="5" href="">Gallery</a></li>
+                <li><a tabindex="6" href="">Contact</a></li>
+                <li><a tabindex="7" href="">Blog</a></li>
+                <li><a tabindex="8" href="">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main">
+        <section>
+            <h2 tabindex="9">My Story</h2>
+            <p tabindex="10">Hi, I’m the creator of this website. I built this virtual space to share my ideas and connect with others
+                in an accessible way.</p>
+        </section>
+
+        <!-- Accessible Table -->
+        <section>
+            <h2 tabindex="11">My Projects</h2>
+            <table aria-label="List of projects">
+                <thead>
+                    <tr>
+                        <th tabindex="12">Project Name</th>
+                        <th tabindex="13">Description</th>
+                        <th tabindex="14">Year</th>
+                        <th tabindex="15">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td tabindex="16">Project 1</td>
+                        <td tabindex="17">My first accessible project.</td>
+                        <td tabindex="18">2023</td>
+                        <td tabindex="19">Completed</td>
+                    </tr>
+                    <tr>
+                        <td tabindex="20">Project 2</td>
+                        <td tabindex="21">My second accessible project.</td>
+                        <td tabindex="22">2023</td>
+                        <td tabindex="23">Completed</td>
+                    </tr>
+                    <tr>
+                        <td tabindex="24">Project 3</td>
+                        <td tabindex="25">Current work in progress.</td>
+                        <td tabindex="26">2024</td>
+                        <td tabindex="27">Ongoing</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2 tabindex="28">The Website</h2>
+            <p tabindex="29">I love this dark aesthetic and I hope you do too! This website is built with accessibility in mind.</p>
+        </section>
+
+        <!-- Contact Form -->
+        <section>
+            <h2 tabindex="30">Get in Touch</h2>
+            <form aria-label="Contact Form">
+                <!-- Name Field -->
+                <label tabindex="31" for="name">Name:</label>
+                <input tabindex="32" type="text" id="name" name="name" required>
+                <span tabindex="33" class="error" aria-live="polite"></span>
+        
+                <!-- Email Field -->
+                <label tabindex="34" for="email">Email:</label>
+                <input tabindex="35" type="email" id="email" name="email" required >
+                <span tabindex="36" class="error" aria-live="polite"></span>
+        
+                <!-- Message Field -->
+                <label tabindex="37" for="message">Message:</label>
+                <textarea tabindex="38" id="message" name="message" required></textarea>
+                <span tabindex="39" class="error" aria-live="polite"></span>
+        
+                <!-- Submit Button -->
+                <button tabindex="40" type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 My Virtual Home. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
