@@ -1,3 +1,4 @@
+let alliances = [];
 const cities = {
     1: { boost: { iron: 5 }, level: 1 },
     2: { boost: { food: 5 }, level: 1 },
@@ -219,7 +220,7 @@ function getRandomColor() {
 document.getElementById("allianceInput").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     let name = event.target.value.trim();
-    if (name && typeof alliances !== 'undefined' && !alliances.some(a => a.name === name)) {
+    if (name && !alliances.some(a => a.name === name)) {
       alliances.push(new Alliance(name, getRandomColor()));
       event.target.value = "";
       updateAllianceList();
@@ -273,7 +274,7 @@ function showPopupForPath(event, path) {
       alliances.forEach(a => a.removeCity(cityId));
       currentPopup.style.display = "none";
       updateAllianceList();
-    } else if (this.value) {
+    } else {
       let selectedAlliance = alliances.find(a => a.name === this.value);
       if (selectedAlliance) {
         alliances.forEach(a => a.removeCity(cityId));
@@ -352,3 +353,5 @@ document.getElementById("export-btn").addEventListener("click", function() {
 });
 
 loadState();
+
+
