@@ -1,4 +1,3 @@
-
 const cities = {
     1: { boost: { iron: 5 }, level: 1 },
     2: { boost: { food: 5 }, level: 1 },
@@ -238,7 +237,7 @@ document.querySelectorAll("path").forEach(path => {
     let cityId = parseInt(this.id);
     let allianceSelect = document.getElementById("alliance-select");
     allianceSelect.innerHTML = '<option value="" disabled selected>Select an alliance</option><option value="none">None</option>';
-    const options = alliances
+    const options = window.alliances
       .map(alliance => {
         let option = document.createElement("option");
         option.value = alliance.name;
@@ -267,13 +266,13 @@ document.querySelectorAll("path").forEach(path => {
 
     allianceSelect.onchange = function() {
       if (this.value === "none") {
-        alliances.forEach(a => a.removeCity(cityId));
+        window.alliances.forEach(a => a.removeCity(cityId));
         currentPopup.style.display = "none";
         updateAllianceList();
       } else {
-        let selectedAlliance = alliances.find(a => a.name === this.value);
+        let selectedAlliance = window.alliances.find(a => a.name === this.value);
         if (selectedAlliance) {
-          alliances.forEach(a => a.removeCity(cityId));
+          window.alliances.forEach(a => a.removeCity(cityId));
           selectedAlliance.addCity(cityId);
           currentPopup.style.display = "none";
           updateAllianceList();
@@ -344,4 +343,3 @@ document.getElementById("export-btn").addEventListener("click", function() {
 });
 
 loadState();
-
