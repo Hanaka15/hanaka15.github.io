@@ -219,7 +219,7 @@ function getRandomColor() {
 document.getElementById("allianceInput").addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     let name = event.target.value.trim();
-    if (name && !alliances.some(a => a.name === name)) {
+    if (name && typeof alliances !== 'undefined' && !alliances.some(a => a.name === name)) {
       alliances.push(new Alliance(name, getRandomColor()));
       event.target.value = "";
       updateAllianceList();
