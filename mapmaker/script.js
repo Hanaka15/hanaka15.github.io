@@ -232,53 +232,62 @@ let currentPopup = null;
 let mouseClickPosition = { x: 0, y: 0 };
 let popupThreshold = 300;
 
-document.querySelectorAll("path").forEach(path => {
-  path.addEventListener("click", function(event) {
-    let cityId = parseInt(this.id);
-    let allianceSelect = document.getElementById("alliance-select");
-    allianceSelect.innerHTML = '<option value="" disabled selected>Select an alliance</option><option value="none">None</option>';
-    const options = window.alliances
-      .map(alliance => {
-        let option = document.createElement("option");
-        option.value = alliance.name;
-        option.textContent = alliance.name;
-        return option;
-      })
-      .sort((a, b) => a.textContent.localeCompare(b.textContent));
-    options.forEach(option => allianceSelect.appendChild(option));
-    currentPopup = document.getElementById("zone-info");
-    currentPopup.style.cssText = `top:${event.pageY + 10}px; left:${event.pageX + 10}px; display:block;`;
+function createAllianceOptions(alliances) {
+  const options = alliances
+    .map(alliance => {
+      let option = document.createElement("option");
+      option.value = alliance.name;
+      option.textContent = alliance.name;
+      return option;
+    })
+    .sort((a, b) => a.textContent.localeCompare(b.textContent));
+  return options;
+}
 
-    mouseClickPosition.x = event.pageX;
-    mouseClickPosition.y = event.pageY;
+function showPopupForPath(event, path) {
+  let cityId = parseInt(path.id);
+  let allianceSelect = document.getElementById("alliance-select");
+  allianceSelect.innerHTML = '<option value="" disabled selected>Select an alliance</option><option value="none">None</option>';
+  const options = createAllianceOptions(alliances);
+  options.forEach(option => allianceSelect.appendChild(option));
+  currentPopup = document.getElementById("zone-info");
+  currentPopup.style.cssText = `top:${event.pageY + 10}px; left:${event.pageX + 10}px; display:block;`;
 
-    function closePopupIfMovedTooFar(event) {
-      let distance = Math.sqrt(
-        Math.pow(event.pageX - mouseClickPosition.x, 2) + Math.pow(event.pageY - mouseClickPosition.y, 2)
-      );
-      if (distance > popupThreshold) {
-        currentPopup.style.display = "none";
-        document.removeEventListener("mousemove", closePopupIfMovedTooFar);
-      }
+  mouseClickPosition.x = event.pageX;
+  mouseClickPosition.y = event.pageY;
+
+  function closePopupIfMovedTooFar(event) {
+    let distance = Math.sqrt(
+      Math.pow(event.pageX - mouseClickPosition.x, 2) + Math.pow(event.pageY - mouseClickPosition.y, 2)
+    );
+    if (distance > popupThreshold) {
+      currentPopup.style.display = "none";
+      document.removeEventListener("mousemove", closePopupIfMovedTooFar);
     }
+  }
 
-    document.addEventListener("mousemove", closePopupIfMovedTooFar);
+  document.addEventListener("mousemove", closePopupIfMovedTooFar);
 
-    allianceSelect.onchange = function() {
-      if (this.value === "none") {
-        window.alliances.forEach(a => a.removeCity(cityId));
+  allianceSelect.onchange = function() {
+    if (this.value === "none") {
+      alliances.forEach(a => a.removeCity(cityId));
+      currentPopup.style.display = "none";
+      updateAllianceList();
+    } else if (this.value) {
+      let selectedAlliance = alliances.find(a => a.name === this.value);
+      if (selectedAlliance) {
+        alliances.forEach(a => a.removeCity(cityId));
+        selectedAlliance.addCity(cityId);
         currentPopup.style.display = "none";
         updateAllianceList();
-      } else {
-        let selectedAlliance = window.alliances.find(a => a.name === this.value);
-        if (selectedAlliance) {
-          window.alliances.forEach(a => a.removeCity(cityId));
-          selectedAlliance.addCity(cityId);
-          currentPopup.style.display = "none";
-          updateAllianceList();
-        }
       }
-    };
+    }
+  };
+}
+
+document.querySelectorAll("path").forEach(path => {
+  path.addEventListener("click", function(event) {
+    showPopupForPath(event, path);
   });
 });
 
