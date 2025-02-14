@@ -23,6 +23,7 @@ body {
   pointer-events: none;
   z-index: 1000;
   white-space: nowrap;
+  display: none;
 }
 
 .side-panel {
