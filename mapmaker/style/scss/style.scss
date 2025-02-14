@@ -12,8 +12,7 @@
         margin-top: 5px;
         width: 100%;
     }
-    
-    // tooltip. 
+
     #tooltip {
         position: absolute;
         background: rgba(0, 0, 0, 0.8);
@@ -21,7 +20,6 @@
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 14px;
-        display: none;
         pointer-events: none;
         z-index: 1000;
         white-space: nowrap;

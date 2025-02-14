@@ -246,32 +246,13 @@ function createAllianceOptions(alliances) {
   return options;
 }
 
-function showPopupForPath(event, path) {
-  let cityId = parseInt(path.id);
-  let allianceSelect = document.getElementById("alliance-select");
-  allianceSelect.innerHTML = '<option value="" disabled selected>Select an alliance</option><option value="none">None</option>';
-  const options = createAllianceOptions(alliances);
-  options.forEach(option => allianceSelect.appendChild(option));
-  currentPopup = document.getElementById("zone-info");
-  currentPopup.style.cssText = `top:${event.pageY + 10}px; left:${event.pageX + 10}px; display:block;`;
-
-  mouseClickPosition.x = event.pageX;
-  mouseClickPosition.y = event.pageY;
-
-  function closePopupIfMovedTooFar(event) {
-    let distance = Math.sqrt(
-      Math.pow(event.pageX - mouseClickPosition.x, 2) + Math.pow(event.pageY - mouseClickPosition.y, 2)
-    );
-    if (distance > popupThreshold) {
-      currentPopup.style.display = "none";
-      document.removeEventListener("mousemove", closePopupIfMovedTooFar);
-    }
-  }
-
+document.getElementById("territory-map").addEventListener("mousemove", function (event) {
   const tooltip = document.getElementById("tooltip");
+  tooltip.style.display = "none"; // Default to hide
 
   document.querySelectorAll("path").forEach(path => {
-    path.addEventListener("mouseenter", function (event) {
+    const rect = path.getBoundingClientRect();
+    if (event.clientX >= rect.left && event.clientX <= rect.right && event.clientY >= rect.top && event.clientY <= rect.bottom) {
       let cityId = parseInt(path.id);
       let city = cities[cityId]; // Get city data
       let alliance = alliances.find(a => a.cityIds.includes(cityId));
@@ -289,21 +270,38 @@ function showPopupForPath(event, path) {
                            Boosts: ${boosts}`;
 
       tooltip.style.display = "block";
-    });
-
-    path.addEventListener("mousemove", function (event) {
       tooltip.style.left = event.pageX + 10 + "px";
       tooltip.style.top = event.pageY + 10 + "px";
-    });
-
-    path.addEventListener("mouseleave", function () {
-      tooltip.style.display = "none";
-    });
+    }
   });
+});
 
+document.getElementById("territory-map").addEventListener("mouseleave", function () {
+  const tooltip = document.getElementById("tooltip");
+  tooltip.style.display = "none";
+});
 
+function showPopupForPath(event, path) {
+  let cityId = parseInt(path.id);
+  let allianceSelect = document.getElementById("alliance-select");
+  allianceSelect.innerHTML = '<option value="" disabled selected>Select an alliance</option><option value="none">None</option>';
+  const options = createAllianceOptions(alliances);
+  options.forEach(option => allianceSelect.appendChild(option));
+  currentPopup = document.getElementById("zone-info");
+  currentPopup.style.cssText = `top:${event.pageY + 10}px; left:${event.pageX + 10}px; display:block;`;
 
-  document.addEventListener("mousemove", closePopupIfMovedTooFar);
+  mouseClickPosition.x = event.pageX;
+  mouseClickPosition.y = event.pageY;
+
+  document.addEventListener("mousemove", function closePopupIfMovedTooFar(event) {
+    let distance = Math.sqrt(
+      Math.pow(event.pageX - mouseClickPosition.x, 2) + Math.pow(event.pageY - mouseClickPosition.y, 2)
+    );
+    if (distance > popupThreshold) {
+      currentPopup.style.display = "none";
+      document.removeEventListener("mousemove", closePopupIfMovedTooFar);
+    }
+  });
 
   allianceSelect.onchange = function () {
     if (this.value === "none") {
@@ -358,15 +356,15 @@ function exportStyledMapImage() {
 
   const backgroundColor = "#1e1e1e";
   const textColor = "#ffffff";
-  const mapX = 800;
-  const mapTop = 50;
-  const mapWidth = exportWidth - mapX + 20;
-  const mapHeight = exportHeight - 240;
+  const mapX = 500;
+  const mapTop = 40;
+  const mapWidth = exportWidth - mapX;
+  const mapHeight = exportHeight - mapTop - 30;
   const maxItemsPerColumn = 15;
-  const columnSpacing = 300;
-  const squareSize = 30;
-  const textMargin = 15;
-  const fontSize = 36;
+  const columnSpacing = 220;
+  const squareSize = 40;
+  const textMargin = 10;
+  const fontSize = 30;
   const lineHeight = squareSize + 20;
 
   const viewBox = svgElement.viewBox.baseVal;
@@ -389,7 +387,7 @@ function exportStyledMapImage() {
     ctx.fillStyle = textColor;
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
-    ctx.fillText("Alliances", 50, 60);
+    ctx.fillText("Alliances", 40, 60);
 
     let column = 0;
     let yPosition = 120;
@@ -404,7 +402,9 @@ function exportStyledMapImage() {
       ctx.fillRect(xOffset, yPosition - (squareSize / 2), squareSize, squareSize);
 
       ctx.fillStyle = textColor;
-      ctx.fillText(alliance.name, xOffset + squareSize + textMargin, yPosition);
+      const text = alliance.name + " (" + alliance.cityIds.length + ")";
+      const textWidth = ctx.measureText(text).width;
+      ctx.fillText(text, xOffset + squareSize + textMargin, yPosition, textWidth);
 
       yPosition += lineHeight;
     });
@@ -420,7 +420,7 @@ function exportStyledMapImage() {
         const textX = mapX + ((bbox.x - originalX) * scaleX) + ((bbox.width * scaleX) / 2);
         const textY = mapTop + ((bbox.y - originalY) * scaleY) + ((bbox.height * scaleY) / 2);
 
-        ctx.font = `bold 28px Arial`;
+        ctx.font = `bold 24px Arial`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
@@ -428,7 +428,7 @@ function exportStyledMapImage() {
         ctx.fillText(alliance.name, textX - 2, textY + 2);
 
         ctx.fillStyle = textColor;
-        ctx.fillText(alliance.name, textX, textY);
+        ctx.fillText(alliance.name , textX, textY);
       });
     });
 
@@ -438,11 +438,14 @@ function exportStyledMapImage() {
     downloadLink.download = "territory_map.png";
     downloadLink.click();
 
+    // document.getElementById("map").src = pngUrl;
+
     URL.revokeObjectURL(url);
   };
 
   img.src = url;
 }
+
 // Add a button to trigger the styled export
 document.getElementById("export-image-btn").addEventListener("click", exportStyledMapImage);
 
@@ -486,5 +489,7 @@ document.getElementById("export-btn").addEventListener("click", function () {
 });
 
 loadState();
+// exportStyledMapImage();
+
 
 
